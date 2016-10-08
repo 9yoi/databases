@@ -11,9 +11,6 @@ var dbConnection = mysql.createConnection({
   database: 'chat'
 });
 
-dbConnection.connect(function(err) {
-  if (err) { throw err; }
-  console.log('You are now connected...');
-});
-
-exports.createConnection = dbConnection;
+exports.dbConnection = function() {
+  return dbConnection;
+};
