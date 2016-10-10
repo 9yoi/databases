@@ -14,6 +14,14 @@ module.exports.app = app;
 // Set what we are listening on.
 app.set('port', 3000);
 
+//mj: allow CORS
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-METHODS', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Accept');
+  next();
+});
+
 // Logging and parsing
 app.use(morgan('dev'));
 app.use(parser.json());

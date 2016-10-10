@@ -12,7 +12,15 @@ module.exports = {
       });
     }, // a function which handles a get request for all messages
     post: function (req, res) {
-
+      var params = [req.body.message, req.body.username, req.body.roomname];
+      //console.log('params', params);
+      models.messages.post(params, function(err, results) {
+        if (err) {
+          throw err;
+        } else {
+          res.sendStatus(201); 
+        }
+      });
     } // a function which handles posting a message to the database
   },
 
@@ -25,7 +33,11 @@ module.exports = {
       });
     },
     post: function (req, res) {
-
+      var params = [req.body.username]; //params always have to be in []
+      models.users.post(params, function(err, results) {
+        if (err) { throw err; }
+        res.sendStatus(201);
+      });
     }
   }
 };

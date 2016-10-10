@@ -5,26 +5,34 @@ module.exports = {
     get: function (callback) {
       var queryStr = 'SELECT * FROM messages;';
       db.query(queryStr, function(err, content) {
-        if (err) { 
-          console.log (err);
-        } else {
-          callback (content);
+        callback (err, content);
+      });
+    },
+       
+    post: function (params, callback) {
+      var queryStr = 'INSERT INTO messages(message, username, roomname) VALUES (?, (select id from users where username = ? limit 1), ?);';
+      db.query(queryStr, params, function(err, content) {
+        if (err) {
+          callback (err, content);
         }
       });
-       
-    }, 
-    post: function (req, res) {
-     
-    
-    },
+    }
   },
 
   users: {
     // Ditto as above.
-    get: function (req, res) {
+    get: function (callback) {
+      var queryStr = 'SELECT * from users';
+      db.query(queryStr, function(err, results) {
+        callback(err, results);
+      });
     },
-    post: function (req, res) {
-      
+
+    post: function (params, callback) {
+      var queryStr = 'INSERT INTO users(username) VALUES (?);';
+      db.query(queryStr, params, function(err, results) {
+        callback(err, results);
+      });
     }
   }
 };
